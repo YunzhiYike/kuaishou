@@ -161,10 +161,4 @@ def follow(touid, ftype=1):
 
 
 if __name__ == '__main__':
-    # getInfo()
-    # getRecommend()
-    # comment(191110023, '5234871700469685058', '[666]')
-    # getProfileFeeds(191110023)
-    # liveUserInfo(2962980459)
-    liveComment('0DJwH5yqbko', '队形不能乱 ')
-    # follow(2923900260,2)
+    liveComment('直播ID', '队形不能乱 ')
