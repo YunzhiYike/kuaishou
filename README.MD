@@ -13,6 +13,8 @@
 - [x] liveUserInfo -- 获取主播直播信息
 - [x] liveComment -- 直播间发消息
 - [x] follow -- 关注用户
+- [x] collectAdd -- 添加作品收藏
+- [x] collectDel -- 取消作品收藏
 
 
 ## 📖 使用说明

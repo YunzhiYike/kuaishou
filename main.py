@@ -160,5 +160,27 @@ def follow(touid, ftype=1):
     print(res)
 
 
+# 添加作品收藏
+def collectAdd(photoId):
+    url = 'https://wxmini-api.uyouqu.com/rest/wd/wechatApp/collect/add'
+    data = {
+        "photoId": photoId
+    }
+    res = requests.post(url, headers=headers, data=json.dumps(data)).content.decode('utf-8')
+    res = json.loads(res)
+    print(res)
+
+
+# 取消作品收藏
+def collectDel(photoId):
+    url = 'https://wxmini-api.uyouqu.com/rest/wd/wechatApp/collect/delete'
+    data = {
+        "photoId": photoId
+    }
+    res = requests.post(url, headers=headers, data=json.dumps(data)).content.decode('utf-8')
+    res = json.loads(res)
+    print(res)
+
+
 if __name__ == '__main__':
-    liveComment('直播ID', '队形不能乱 ')
+    print('hello')
