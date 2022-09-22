@@ -2,6 +2,8 @@
 
 ## 说明：本项目为开源，仅供学习参考，请勿方法用途否则后果自负！
 
+## [👉 视频传送门 🎬](https://www.bilibili.com/video/BV1iY4y1N76h?share_source=copy_web&vd_source=71e28910aae780b1b2052c3052b8a2e8)
+
 ## 🐂 功能支持
 - [x] getInfo -- 通过用户ID获取用户信息 
 - [x] getRecommend -- 获取推荐数据列表
