@@ -1,4 +1,7 @@
 import json
+from copy import copy
+
+from requests_toolbelt import MultipartEncoder
 
 import requests as requests
 
@@ -70,9 +73,9 @@ def like(userId, photoId, cancel=0):
         "userId": userId,
         "cancel": cancel
     }
-    res = requests.post(url, headers=headers, data=json.dumps(data)).content.decode('utf-8')
-    res = json.loads(res)
+    res = requests.post(url, headers=headers, data=json.dumps(data)).json()
     print(res)
+    return res
 
 
 # 评论
@@ -83,9 +86,9 @@ def comment(userId, photoId, content):
         "photoAuthorId": userId,
         "content": content
     }
-    res = requests.post(url, headers=headers, data=json.dumps(data)).content.decode('utf-8')
-    res = json.loads(res)
+    res = requests.post(url, headers=headers, data=json.dumps(data)).json()
     print(res)
+    return res
 
 
 # 获取用户下所有视频
@@ -96,9 +99,9 @@ def getProfileFeeds(userId, pcursor=None, count=12):
         "eid": userId,
         "pcursor": pcursor
     }
-    res = requests.post(url, headers=headers, data=json.dumps(data)).content.decode('utf-8')
-    res = json.loads(res)
+    res = requests.post(url, headers=headers, data=json.dumps(data)).json()
     print(res)
+    return res
 
 
 # 获取关注数据列表
@@ -118,9 +121,9 @@ def myFollow(pcursor=0, clientRealReportData='', count=12):
 # 获取直播列表 pcursor游标 ，tabId: 1精选、7卖货、3游戏、11颜值
 def live(pcursor=0, tabId=1):
     url = f'https://wxmini-api.uyouqu.com/rest/wd/wechatApp/live/feed/square/more?__NS_sig3={__NS_sig3}&__NS_sig3_origin={__NS_sig3_origin}&pcursor={pcursor}&tabId={tabId}'
-    res = requests.get(url, headers=headers).content.decode('utf-8')
-    res = json.loads(res)
+    res = requests.get(url, headers=headers).json()
     print(res)
+    return res
 
 
 # 获取主播直播信息
@@ -182,5 +185,55 @@ def collectDel(photoId):
     print(res)
 
 
+# 上传作品图片文件
+def uploadImage(taskId, filePath, index=1):
+    url = 'https://wxmini-api.uyouqu.com/rest/wd/wechatApp/flashPhoto/uploadImage'
+    headers_b = copy(headers)
+    headers_b['content-type'] = 'multipart/form-data; boundary=WABoundary+0FB3754FF6D925CEWA'
+    headers_b['accept-language'] = 'zh-CN,zh-Hans;q=0.9'
+    data = MultipartEncoder(
+        fields={
+            "index": str(index),
+            'taskId': taskId,
+            "image": ('tmp_d0596ba1c46964c15507ceb6efbea359.jpg', open(filePath, 'rb'), 'image/jpg')
+        },
+        boundary='WABoundary+0FB3754FF6D925CEWA'
+    )
+    res = requests.post(url, headers=headers_b, data=data).json()
+    print(res)
+
+
+# 获取发布任务ID
+def getTaskId(templateId=14):
+    url = f'https://wxmini-api.uyouqu.com/rest/wd/wechatApp/flashPhoto/getTaskId?__NS_sig3={__NS_sig3}&__NS_sig3_origin={__NS_sig3_origin}'
+    data = {
+        "templateId": templateId
+    }
+    res = requests.post(url, headers=headers, data=json.dumps(data)).json()
+    print(res)
+    return res['taskId']
+
+
+# 发布作品
+def publish(taskId):
+    url = f'https://wxmini-api.uyouqu.com/rest/wd/wechatApp/flashPhoto/publish?__NS_sig3={__NS_sig3}&__NS_sig3_origin={__NS_sig3_origin}'
+    data = {
+        "taskId": taskId
+    }
+    res = requests.post(url, headers=headers, data=json.dumps(data)).json()
+    print(res)
+
+
+# 获取作品发布模板
+def getTemplateList():
+    url = f'https://wxmini-api.uyouqu.com/rest/wd/wechatApp/flashPhoto/templateList?__NS_sig3={__NS_sig3}&__NS_sig3_origin={__NS_sig3_origin}'
+    res = requests.post(url, headers=headers, data='{}').json()
+    print(res)
+
+
+
 if __name__ == '__main__':
-    print('hello')
+    # 获取直播列表
+    rs = live()
+    print(rs)
+

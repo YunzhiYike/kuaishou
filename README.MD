@@ -15,6 +15,7 @@
 - [x] follow -- 关注用户
 - [x] collectAdd -- 添加作品收藏
 - [x] collectDel -- 取消作品收藏
+- [x] publish -- 上传图片作品
 
 
 ## 📖 使用说明
